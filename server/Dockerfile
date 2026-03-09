@@ -11,7 +11,7 @@ RUN chmod +x gradlew
 RUN ./gradlew dependencies
 
 COPY . .
-
+RUN chmod +x gradlew
 RUN ./gradlew bootJar
 
 EXPOSE 8080
