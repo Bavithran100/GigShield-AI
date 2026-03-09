@@ -22,7 +22,7 @@ jobs:
 
     - name: Build frontend image
       run: |
-        docker build -t bavithran777/docker-fullstack-frontend ./frontend
+        docker build -t bavithran777/docker-fullstack-frontend ./Client
 
     - name: Push frontend image
       run: |
@@ -30,7 +30,7 @@ jobs:
 
     - name: Build backend image
       run: |
-        docker build -t bavithran777/docker-fullstack-backend ./backend
+        docker build -t bavithran777/docker-fullstack-backend ./server
 
     - name: Push backend image
       run: |
