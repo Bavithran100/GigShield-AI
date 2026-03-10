@@ -2,54 +2,61 @@
 
 ### AI-Powered Parametric Insurance for India's Gig Workers
 
-## 📌 Problem Statement
+---
 
-India’s gig economy workers (Zomato, Swiggy, Amazon, Zepto delivery partners) depend on daily earnings. External disruptions like **heavy rain, floods, heatwaves, pollution, or curfews** can stop deliveries and reduce their income by **20–30%**.
+## 📌 Problem
 
-Currently, these workers **have no financial protection** against such uncontrollable events.
+India's gig economy workers (Zomato, Swiggy, Amazon, Zepto delivery partners) depend on **daily earnings**.
 
-This project builds an **AI-powered parametric insurance platform** that automatically protects gig workers from **income loss caused by environmental and social disruptions**.
+External disruptions such as:
+
+* Heavy rain
+* Floods
+* Heatwaves
+* High air pollution
+* Curfews
+
+can reduce their income by **20–30%**.
+
+Currently, these workers **have no automated financial protection** against such uncontrollable events.
 
 ---
 
-# 🚀 Solution Overview
+## 🚀 Solution
 
-GigShield AI provides a **weekly subscription-based parametric insurance model** for gig workers.
+GigShield AI provides an **AI-powered parametric insurance platform**.
 
-Workers subscribe to a weekly insurance plan. If a disruption event occurs in their working area, the system **automatically detects the event and sends compensation instantly**.
+Workers subscribe to a **weekly insurance plan**.
+When predefined disruption conditions occur, the system automatically:
 
-No manual claims are required.
+1. Detects the event
+2. Verifies worker location
+3. Checks active insurance policy
+4. Creates a claim
+5. Sends instant payout
 
-The system uses:
-
-* Environmental APIs (weather, pollution, disaster alerts)
-* AI-based risk assessment
-* Automated claim triggers
-* Fraud detection
-* Instant payout system
+No manual claim submission is required.
 
 ---
 
-# 🧠 Key Features
+## 🧠 Key Features
 
-### 1️⃣ AI Risk Assessment
+### AI Risk Assessment
 
-The platform predicts risk levels based on:
+AI calculates insurance risk based on:
 
 * Worker location
-* Historical weather patterns
-* Flood risk zones
+* Historical weather data
 * Pollution levels
+* Flood-risk zones
 
-This helps calculate **dynamic weekly premiums**.
+This enables **dynamic premium calculation**.
 
 ---
 
-### 2️⃣ Parametric Insurance Model
+### Automatic Claim Trigger
 
-Instead of manual claims, payouts are triggered automatically when predefined conditions occur.
-
-Example triggers:
+Claims are triggered automatically when environmental thresholds are exceeded.
 
 | Event         | Condition          | Payout |
 | ------------- | ------------------ | ------ |
@@ -60,51 +67,31 @@ Example triggers:
 
 ---
 
-### 3️⃣ Automatic Claim Processing
-
-Workflow:
-
-```
-Environmental API detects disruption
-        ↓
-System checks worker location
-        ↓
-Active insurance policy verified
-        ↓
-Claim automatically created
-        ↓
-Instant payout sent
-```
-
-Workers **do not need to submit claims manually**.
-
----
-
-### 4️⃣ Fraud Detection
+### Fraud Detection
 
 The system prevents fraudulent claims using:
 
-* GPS location verification
-* Anomaly detection
+* GPS verification
 * Duplicate claim detection
 * Activity validation
+* Anomaly detection
 
 ---
 
-### 5️⃣ Worker Dashboard
+### Worker Dashboard
 
 Workers can view:
 
-* Active insurance coverage
-* Weekly protection amount
+* Active insurance plan
+* Coverage details
 * Claims history
 * Risk alerts
 
 ---
 
-### 6️⃣ Admin Dashboard
+### Admin Dashboard
 
-Insurance providers can monitor:
+Admins can monitor:
 
 * Active policies
 * Claims triggered
@@ -113,34 +100,31 @@ Insurance providers can monitor:
 
 ---
 
-# 🏗 System Architecture
+## 🏗 System Architecture
 
 ```
-                React (Vite Frontend)
-                        │
-                        │ REST API
-                        ▼
-               Spring Boot Backend
-                        │
-        ┌───────────────┼───────────────┐
-        ▼               ▼               ▼
-     MySQL DB        Redis Cache    AI Services
-  (users/policies)   (sessions)    (risk + fraud)
-
-                        │
-                        ▼
-                External Data APIs
-        (Weather / AQI / Earthquake / Alerts)
+React (Vite Frontend)
+        │
+        ▼
+Spring Boot Backend
+        │
+ ┌──────┼────────┐
+ ▼      ▼        ▼
+MySQL  Redis   AI Services
+        │
+        ▼
+ External APIs
+(Weather / AQI / Disaster Alerts)
 ```
 
 ---
 
-# ⚙️ Technology Stack
+## ⚙️ Technology Stack
 
 ### Frontend
 
 * React (Vite)
-* Tailwind / CSS
+* CSS / Tailwind
 * Axios
 
 ### Backend
@@ -148,7 +132,7 @@ Insurance providers can monitor:
 * Spring Boot
 * Gradle
 * Spring Security
-* OAuth2 (Google Login)
+* JWT Authentication
 
 ### Database
 
@@ -167,271 +151,96 @@ Insurance providers can monitor:
 
 * Python
 * Scikit-learn
-* HuggingFace models (optional)
+* HuggingFace (optional)
 
 ---
 
-# 🔑 Authentication
+## 📡 External APIs
 
-Users authenticate using **Google OAuth Login**.
-
-Workflow:
-
-```
-User clicks "Login with Google"
-        ↓
-Google authentication
-        ↓
-Backend receives user profile
-        ↓
-JWT token generated
-        ↓
-Token used for API requests
-```
+| API              | Purpose                  |
+| ---------------- | ------------------------ |
+| OpenWeather API  | Weather & rainfall data  |
+| AQICN API        | Air pollution monitoring |
+| USGS API         | Earthquake detection     |
+| Google OAuth     | Authentication           |
+| Razorpay Sandbox | Payment simulation       |
 
 ---
 
-# 👤 User Onboarding
+# 🐳 Running the Project with Docker
 
-After login, users complete their profile:
+The application runs using **Docker Compose** with four services:
 
-Required fields:
-
-* Name
-* Phone number
-* City
-* Delivery platform
-* Vehicle type
-* Aadhaar number
+* React Frontend
+* Spring Boot Backend
+* MySQL Database
+* Redis Cache
 
 ---
+## 1️⃣ Install Requirements
 
-# 🪪 Aadhaar Verification
+Install:
 
-Aadhaar authentication is performed using **KYC verification APIs**.
+* Docker
+* Docker Compose
 
-Example providers:
+Verify installation:
 
-* Signzy
-* IDfy
-* Karza
-
-Verification method:
-
+```bash
+docker --version
+docker compose version
 ```
-User enters Aadhaar number
-        ↓
-KYC provider sends OTP
-        ↓
-User enters OTP
-        ↓
-Identity verified
-```
-
-For security, the system stores only:
-
-* Aadhaar last 4 digits
-* verification status
-
 ---
 
-# 🚴 Gig Worker Verification
+## 2️⃣ Clone the Repository
 
-Workers must prove they are active delivery partners.
-
-Verification methods:
-
-### Option 1 — Screenshot Verification
-
-Users upload screenshots from delivery apps (Swiggy/Zomato dashboard).
-
-OCR extracts platform data to verify.
-
-### Option 2 — Delivery Partner ID
-
-Users submit their partner ID for verification.
-
-### Option 3 — Admin Approval
-
-Manual verification through admin dashboard.
-
+```bash
+git clone https://github.com/bavithran100/gigshield-ai.git
+cd gigshield-ai
+```
 ---
 
-# 💳 Insurance Subscription
+## 3️⃣ Run the Application
 
-Workers can subscribe to weekly plans.
+Start all services:
 
-| Plan     | Weekly Cost | Daily Coverage |
-| -------- | ----------- | -------------- |
-| Basic    | ₹10         | ₹200           |
-| Standard | ₹20         | ₹400           |
-| Premium  | ₹30         | ₹600           |
-
-Workflow:
-
-```
-User selects plan
-        ↓
-Payment via Razorpay sandbox
-        ↓
-Policy activated for 7 days
+```bash
+docker compose up --build
 ```
 
+## 4️⃣ Access the Application
+
+Frontend
+
+```
+http://localhost:5173
+```
+
+Backend API
+
+```
+https://localhost:8443
+```
 ---
 
-# 🌦 Event Monitoring System
+## 5️⃣ Stop the Application
 
-The backend runs a scheduled job every **10 minutes**.
-
-It collects data from:
-
-* Weather API
-* Air Pollution API
-* Disaster alerts
-
-If conditions exceed thresholds, the system triggers payouts.
-
+```
+docker compose down
+```
 ---
 
-# 📡 External APIs
+## 🌍 Future Improvements
 
-Free APIs used:
-
-| API              | Purpose              |
-| ---------------- | -------------------- |
-| OpenWeather API  | Weather & rainfall   |
-| AQICN API        | Air pollution        |
-| USGS API         | Earthquake detection |
-| Google OAuth     | Authentication       |
-| Razorpay Sandbox | Payment simulation   |
-
----
-
-# 💰 Claim & Payout Workflow
-
-```
-Environmental event detected
-        ↓
-Affected worker locations identified
-        ↓
-Active policy verified
-        ↓
-Automatic claim created
-        ↓
-Instant payout processed
-```
-
----
-
-# 🗄 Database Schema
-
-### Users Table
-
-```
-id
-email
-name
-phone
-aadhaar_last4
-kyc_status
-worker_verified
-platform
-created_at
-```
-
-### Policies Table
-
-```
-id
-user_id
-plan_type
-premium
-coverage
-start_date
-end_date
-status
-```
-
-### Events Table
-
-```
-id
-event_type
-location
-severity
-timestamp
-```
-
-### Claims Table
-
-```
-id
-user_id
-event_id
-amount
-status
-created_at
-```
-
----
-
-# 🧰 Redis Usage
-
-Redis is used for:
-
-* API response caching
-* JWT session storage
-* rate limiting
-* event caching
-
----
-
-# 📊 Admin Analytics
-
-The admin dashboard provides:
-
-* claim statistics
-* active policies
-* disruption heatmaps
-* fraud alerts
-
----
-
-# 🔄 Complete Workflow
-
-```
-User logs in with Google
-        ↓
-Profile completion
-        ↓
-Aadhaar verification
-        ↓
-Gig worker verification
-        ↓
-Insurance subscription
-        ↓
-System monitors environmental events
-        ↓
-Disruption detected
-        ↓
-Automatic claim triggered
-        ↓
-Instant payout sent
-```
-
----
-
-# 🌍 Future Improvements
-
-* Real-time risk heatmaps
+* Real-time disruption heatmaps
 * AI-based premium optimization
 * Delivery platform API integration
 * Mobile application for workers
 
 ---
 
-# 👨‍💻 Team
+## 👨‍💻 Team
 
-Guidewire DEVTrails Hackathon Project
+Guidewire **DEVTrails Hackathon Project**
 
-Built to protect the livelihoods of India’s gig workers.
+Built to protect the livelihoods of **India’s gig economy workers**.
