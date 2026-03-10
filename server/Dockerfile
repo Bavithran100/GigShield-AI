@@ -14,6 +14,6 @@ COPY . .
 RUN chmod +x gradlew
 RUN ./gradlew bootJar
 
-EXPOSE 8080
+EXPOSE 8443
 
 CMD ["java","-jar","build/libs/server-0.0.1-SNAPSHOT.jar"]

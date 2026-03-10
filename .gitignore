@@ -1,0 +1,27 @@
+# environment variables
+.env
+
+# logs
+*.log
+
+# Docker
+docker-compose.override.yml
+
+# node modules
+Client/node_modules
+
+# React build
+Client/dist
+
+# Gradle
+server/build
+server/.gradle
+
+# IDE files
+.vscode
+.idea
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
