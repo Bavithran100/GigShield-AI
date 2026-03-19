@@ -1,0 +1,37 @@
+### Health
+GET http://localhost:8080/api/health
+
+### Current user
+GET http://localhost:8080/api/user/me
+Cookie: GIGSHIELD_SESSION={{sessionId}}
+
+### Update profile
+POST http://localhost:8080/api/user/profile
+Content-Type: application/json
+Cookie: GIGSHIELD_SESSION={{sessionId}}
+
+{
+  "name": "Pavith",
+  "phoneNumber": "9876543210",
+  "city": "Chennai",
+  "deliveryPlatform": "Swiggy",
+  "vehicleType": "Bike",
+  "aadhaarLast4": "4321"
+}
+
+### Available plans
+GET http://localhost:8080/api/plans
+
+### Subscribe to plan
+POST http://localhost:8080/api/subscription
+Content-Type: application/json
+Cookie: GIGSHIELD_SESSION={{sessionId}}
+
+{
+  "planCode": "STANDARD",
+  "paymentReference": "mock-razorpay-standard"
+}
+
+### Active subscription
+GET http://localhost:8080/api/subscription/me
+Cookie: GIGSHIELD_SESSION={{sessionId}}

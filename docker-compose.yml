@@ -1,41 +1,53 @@
 services:
-
   redis:
     image: redis:7
-    container_name: redis_server
     ports:
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
   mysql:
     image: mysql:8
-    container_name: mysql_db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: testdb
+      MYSQL_DATABASE: gigshield
       MYSQL_USER: appuser
       MYSQL_PASSWORD: apppass
     ports:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   backend:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: springboot_api
     ports:
-      - "8443:8443"
+      - "8080:8080"
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/testdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gigshield
       SPRING_DATASOURCE_USERNAME: appuser
       SPRING_DATASOURCE_PASSWORD: apppass
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
+      SPRING_PROFILES_ACTIVE: docker
+      FRONTEND_URL: http://localhost:5173
+      BACKEND_URL: http://localhost:8080
+      OAUTH_SUCCESS_URL: http://localhost:5173/dashboard
       SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
 
@@ -43,11 +55,12 @@ services:
     build:
       context: ./Client
       dockerfile: Dockerfile
-    container_name: react_vite_app
     ports:
       - "5173:5173"
     depends_on:
       - backend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8080
 
 volumes:
   mysql_data:
